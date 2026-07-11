@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>電子成果冊</title>
+  <meta name="description" content="綠療樂齡手作坊 電子成果冊">
+  <meta name="theme-color" content="#F5F2E9">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <main class="reader" id="reader" aria-label="成果冊內頁"></main>
+
+  <header class="toolbar toolbar--top" id="topBar">
+    <div class="toolbar__side"></div>
+    <h1 class="book-title" id="bookTitle">電子成果冊</h1>
+    <div class="toolbar__side toolbar__side--right">
+      <button class="icon-btn" id="thumbBtn" aria-label="開啟縮圖導覽" title="縮圖導覽">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <g fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+            <rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/>
+            <rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/>
+            <rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/>
+            <rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/>
+          </g>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <footer class="toolbar toolbar--bottom" id="bottomBar">
+    <button class="nav-btn" id="prevBtn" aria-label="上一頁">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+    <div class="page-indicator" aria-live="polite">
+      <span class="page-indicator__current" id="currentPage">1</span>
+      <span class="page-indicator__sep">/</span>
+      <span id="totalPages">–</span>
+    </div>
+    <button class="nav-btn" id="nextBtn" aria-label="下一頁">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+  </footer>
+
+  <dialog class="thumb-dialog" id="thumbDialog" aria-label="縮圖導覽">
+    <div class="thumb-dialog__header">
+      <h2 class="thumb-dialog__title">頁面導覽</h2>
+      <button class="icon-btn" id="thumbCloseBtn" aria-label="關閉縮圖導覽">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+    <div class="thumb-grid" id="thumbGrid"></div>
+  </dialog>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
