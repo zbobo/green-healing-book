@@ -20,15 +20,18 @@ Canva 負責排版，本網站負責閱讀。
 ├── data/books.json   ← 成果冊資料
 └── books/
     └── demo/         ← 每本成果冊一個資料夾
-        ├── 1.png
-        └── ...
+        ├── 1.webp
+        ├── ...
+        └── thumbs/   ← 縮圖導覽用的小圖（寬 300px）
 ```
 
 ## 新增 / 更換成果冊
 
 1. 在 `books/` 下建立新資料夾，放入各頁圖片
-   - 建議寬度 1200~1600 px、單張 200~600 KB、WebP 或 PNG
-2. 修改 `data/books.json` 的 `title` 與 `pages` 清單
+   - 建議 WebP、寬度 1200 px、單張 100~300 KB
+   - ffmpeg 轉檔：`ffmpeg -i 原圖.jpg -vf "scale=1200:-2" -c:v libwebp -quality 82 1.webp`
+   - 縮圖：`ffmpeg -i 原圖.jpg -vf "scale=300:-2" -c:v libwebp -quality 72 thumbs/1.webp`
+2. 修改 `data/books.json` 的 `title`、`pages` 與 `thumbs` 清單
 
 不需要修改 HTML。
 

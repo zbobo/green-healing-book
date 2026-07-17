@@ -38,7 +38,7 @@ async function init() {
   totalEl.textContent = book.pages.length;
 
   buildPages(book.pages);
-  buildThumbs(book.pages);
+  buildThumbs(book.thumbs || book.pages);
   observePages();
   bindControls();
 
@@ -46,6 +46,26 @@ async function init() {
   const start = pageFromHash();
   if (start > 0) goToPage(start, false);
   else setCurrent(0);
+
+  prefetchPages(book.pages, Math.max(start, 0));
+}
+
+/* ---------- 背景預載 ----------
+   趁閱讀時逐張把後面的頁載入快取，翻頁時即時顯示。
+   一次只載一張，避免搶走目前頁的頻寬。 */
+
+function prefetchPages(pages, startIndex) {
+  const queue = pages
+    .slice(startIndex + 1)
+    .concat(pages.slice(0, startIndex + 1).reverse());
+  let i = 0;
+  const loadNext = () => {
+    if (i >= queue.length) return;
+    const img = new Image();
+    img.onload = img.onerror = () => { i += 1; loadNext(); };
+    img.src = queue[i];
+  };
+  loadNext();
 }
 
 /* ---------- 建立頁面 ---------- */
