@@ -1,52 +1,52 @@
-{
-  "books": [
-    {
-      "id": "demo",
-      "title": "綠意手作・樂齡療育日",
-      "pages": [
-        "books/demo/1.webp",
-        "books/demo/2.webp",
-        "books/demo/3.webp",
-        "books/demo/4.webp",
-        "books/demo/5.webp",
-        "books/demo/6.webp",
-        "books/demo/7.webp",
-        "books/demo/8.webp",
-        "books/demo/9.webp",
-        "books/demo/10.webp",
-        "books/demo/11.webp",
-        "books/demo/12.webp",
-        "books/demo/13.webp",
-        "books/demo/14.webp",
-        "books/demo/15.webp",
-        "books/demo/16.webp",
-        "books/demo/17.webp",
-        "books/demo/18.webp",
-        "books/demo/19.webp",
-        "books/demo/20.webp"
-      ],
-      "thumbs": [
-        "books/demo/thumbs/1.webp",
-        "books/demo/thumbs/2.webp",
-        "books/demo/thumbs/3.webp",
-        "books/demo/thumbs/4.webp",
-        "books/demo/thumbs/5.webp",
-        "books/demo/thumbs/6.webp",
-        "books/demo/thumbs/7.webp",
-        "books/demo/thumbs/8.webp",
-        "books/demo/thumbs/9.webp",
-        "books/demo/thumbs/10.webp",
-        "books/demo/thumbs/11.webp",
-        "books/demo/thumbs/12.webp",
-        "books/demo/thumbs/13.webp",
-        "books/demo/thumbs/14.webp",
-        "books/demo/thumbs/15.webp",
-        "books/demo/thumbs/16.webp",
-        "books/demo/thumbs/17.webp",
-        "books/demo/thumbs/18.webp",
-        "books/demo/thumbs/19.webp",
-        "books/demo/thumbs/20.webp"
-      ]
-    }
-  ]
+﻿{
+    "books":  [
+                  {
+                      "id":  "demo",
+                      "title":  "綠意手作・樂齡療育日",
+                      "pages":  [
+                                    "books/demo/1.webp",
+                                    "books/demo/2.webp",
+                                    "books/demo/3.webp",
+                                    "books/demo/4.webp",
+                                    "books/demo/5.webp",
+                                    "books/demo/6.webp",
+                                    "books/demo/7.webp",
+                                    "books/demo/8.webp",
+                                    "books/demo/9.webp",
+                                    "books/demo/10.webp",
+                                    "books/demo/11.webp",
+                                    "books/demo/12.webp",
+                                    "books/demo/13.webp",
+                                    "books/demo/14.webp",
+                                    "books/demo/15.webp",
+                                    "books/demo/16.webp",
+                                    "books/demo/17.webp",
+                                    "books/demo/18.webp",
+                                    "books/demo/19.webp",
+                                    "books/demo/20.webp"
+                                ],
+                      "thumbs":  [
+                                     "books/demo/thumbs/1.webp",
+                                     "books/demo/thumbs/2.webp",
+                                     "books/demo/thumbs/3.webp",
+                                     "books/demo/thumbs/4.webp",
+                                     "books/demo/thumbs/5.webp",
+                                     "books/demo/thumbs/6.webp",
+                                     "books/demo/thumbs/7.webp",
+                                     "books/demo/thumbs/8.webp",
+                                     "books/demo/thumbs/9.webp",
+                                     "books/demo/thumbs/10.webp",
+                                     "books/demo/thumbs/11.webp",
+                                     "books/demo/thumbs/12.webp",
+                                     "books/demo/thumbs/13.webp",
+                                     "books/demo/thumbs/14.webp",
+                                     "books/demo/thumbs/15.webp",
+                                     "books/demo/thumbs/16.webp",
+                                     "books/demo/thumbs/17.webp",
+                                     "books/demo/thumbs/18.webp",
+                                     "books/demo/thumbs/19.webp",
+                                     "books/demo/thumbs/20.webp"
+                                 ]
+                  }
+              ]
 }
