@@ -43,18 +43,51 @@ New-Item -ItemType Directory -Force $outDir, $thumbDir | Out-Null
 Remove-Item (Join-Path $outDir '*.webp')   -ErrorAction SilentlyContinue
 Remove-Item (Join-Path $thumbDir '*.webp') -ErrorAction SilentlyContinue
 
+# 桌面若被 OneDrive 同步，新檔案寫入瞬間可能被短暫鎖住，
+# 造成 ffmpeg 偶發 "Invalid argument" 且沒有真的產生新檔。
+# 這裡失敗會自動重試，並在最終確認檔案有更新，而非只看指令有沒有跑完。
+function Convert-WithRetry($srcPath, $destPath, $scale, $quality) {
+    $beforeTime = if (Test-Path $destPath) { (Get-Item $destPath).LastWriteTime } else { $null }
+    for ($attempt = 1; $attempt -le 4; $attempt++) {
+        Remove-Item $destPath -ErrorAction SilentlyContinue
+        try {
+            ffmpeg -y -loglevel error -i $srcPath -vf "scale=$($scale):-2" -c:v libwebp -quality $quality -compression_level 6 $destPath
+        } catch {
+            # ffmpeg 寫入檔案瞬間被鎖住時，PowerShell 會把它的錯誤訊息當成中止錯誤，
+            # 這裡接住它，交給下面的重試機制處理，不要讓整個腳本停掉。
+        }
+        $ok = (Test-Path $destPath) -and ((Get-Item $destPath).Length -gt 0) -and ((Get-Item $destPath).LastWriteTime -ne $beforeTime)
+        if ($ok) { return $true }
+        Start-Sleep -Milliseconds 400
+    }
+    return $false
+}
+
+$failed = @()
 foreach ($f in $files) {
     $n = $f.BaseName
-    ffmpeg -y -loglevel error -i $f.FullName -vf "scale=1200:-2" -c:v libwebp -quality 82 -compression_level 6 (Join-Path $outDir "$n.webp")
-    ffmpeg -y -loglevel error -i $f.FullName -vf "scale=300:-2"  -c:v libwebp -quality 72 -compression_level 6 (Join-Path $thumbDir "$n.webp")
-    Write-Host ("  第 {0} 頁 完成" -f $n)
+    $okPage  = Convert-WithRetry $f.FullName (Join-Path $outDir "$n.webp")   1200 82
+    $okThumb = Convert-WithRetry $f.FullName (Join-Path $thumbDir "$n.webp") 300  72
+    if (-not $okPage -or -not $okThumb) {
+        $failed += $n
+        Write-Host ("  第 {0} 頁 失敗（重試 4 次仍無法寫入，可能被 OneDrive 鎖住）" -f $n) -ForegroundColor Red
+    } else {
+        Write-Host ("  第 {0} 頁 完成" -f $n)
+    }
+}
+
+if ($failed.Count -gt 0) {
+    Write-Host ''
+    Write-Host ("以下頁面壓縮失敗，請暫停 OneDrive 同步後重新執行一次：{0}" -f ($failed -join '、')) -ForegroundColor Red
+    exit 1
 }
 
 # --- 更新 books.json 的 pages / thumbs 清單 ---
 $json = Get-Content $jsonPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $json.books[0].pages  = @($files | ForEach-Object { "books/$bookId/$($_.BaseName).webp" })
 $json.books[0].thumbs = @($files | ForEach-Object { "books/$bookId/thumbs/$($_.BaseName).webp" })
-$json | ConvertTo-Json -Depth 5 | Out-File $jsonPath -Encoding utf8
+$jsonText = $json | ConvertTo-Json -Depth 5
+[System.IO.File]::WriteAllText($jsonPath, $jsonText, [System.Text.UTF8Encoding]::new($false))  # 不加 BOM，避免部分瀏覽器解析失敗
 
 # --- 結果 ---
 $total = [math]::Round((Get-ChildItem (Join-Path $outDir '*.webp') | Measure-Object Length -Sum).Sum / 1MB, 1)

@@ -1,6 +1,6 @@
 @echo off
-chcp 65001 >nul
+chcp 950 >nul
 cd /d "%~dp0"
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0壓縮圖片.ps1"
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0compress-images.ps1"
 echo.
 pause
